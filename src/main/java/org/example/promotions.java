@@ -24,7 +24,8 @@ public class promotions extends Main  {
         clicked(By.xpath("/html/body/div[2]/div[3]/div/div[2]/div/div[2]/div[2]/div/div[1]/button"));
 
         // Verify promotion type is present and delete it
-        Assert.assertTrue(isPromotionTypePresent());
+        System.out.print(isPromotionTypePresent());
+       Assert.assertTrue(isPromotionTypePresent());
         deletePromotionType();
 
         verifyToast("Promotion Type Deleted successfully.");

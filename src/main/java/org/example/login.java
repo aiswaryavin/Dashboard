@@ -10,15 +10,16 @@ public class login extends Main {
     @Test(priority = 1)
     public void Welcome() {
         driver.get("https://dashboard.aqaryint.com/");
-        validateURL("https://dashboard.aqaryint.com/");
+        validateURL(driver,"https://dashboard.aqaryint.com/");
         clicked(By.xpath("//*[@id=\"home\"]/div/div/div[1]/div/div[3]/div/div/div/div/a"));
     }
 
     @Test(priority = 2)
-    public void SwitchTab() {
+    public void SwitchTab() throws InterruptedException {
         ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs.get(1));
-        validateURL("https://dashboard.aqaryint.com/dashboard/pages/authentication/portal_registration/login");
+        Thread.sleep(1000);
+        validateURL(driver,"https://dashboard.aqaryint.com/dashboard/pages/authentication/portal_registration/login");
     }
 
     @Test(priority = 3)
@@ -27,6 +28,6 @@ public class login extends Main {
         enterText(By.name("password"), "mark");
         clicked(By.xpath("//*[@id=\":r0:\"]"));
         Thread.sleep(100);
-        validateURL("https://dashboard.aqaryint.com/dashboard/default");
+        validateURL(driver,"https://dashboard.aqaryint.com/dashboard/default");
     }
 }

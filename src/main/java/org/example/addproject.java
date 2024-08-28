@@ -13,7 +13,7 @@ import java.util.UUID;
 import static org.example.Main.driver;
 
 
-public class addproject {
+public class addproject extends Main {
 
 
     @Test(priority = 5)
@@ -24,8 +24,8 @@ public class addproject {
 
         driver.getCurrentUrl();
 
-        clicked(driver,By.xpath("//*[@id=\"__next\"]/div/nav/div/div/div[2]/ul[2]/button"));
-        clicked(driver,By.xpath("//*[@id=\"__next\"]/div/nav/div/div/div[2]/ul[2]/div[1]/div/div/a/div"));
+        clicked(By.xpath("//*[@id=\"__next\"]/div/nav/div/div/div[2]/ul[2]/button"));
+        clicked(By.xpath("//*[@id=\"__next\"]/div/nav/div/div/div[2]/ul[2]/div[1]/div/div/a/div"));
         String prjtname = randomString(4);
         String license = UUID.randomUUID().toString();
         String projectno=randomString2(6);
@@ -53,7 +53,7 @@ public class addproject {
         selectDate(driver,"completionPercentageDate","/html/body/div[2]/div[3]/div/div/div/div[2]/div/div[2]/div/div/div[2]/div/div[4]/button[3]");
         setInputValue(driver,"plotArea","5000");
         setInputValue(driver,"builtupArea","3000");
-        URLValidator.validateURL(driver,"https://dashboard.aqaryint.com/dashboard/project/add_project");
+        validateURL(driver,"https://dashboard.aqaryint.com/dashboard/project/add_project");
         drop(driver,"furnished","//*[@id=\"furnished-option-1\"]");
         setInputValue(driver,"noOfProperties","10");
         drop(driver,"lifeStyle","//*[@id=\"lifeStyle-option-0\"]");
@@ -77,7 +77,7 @@ public class addproject {
         selectFacility(driver, "Security Staff");
         selectAmenity(driver, "Balcony or Terrace");
         // Click the submit button
-        clicked(driver, By.xpath("//button[@type='submit' and contains(text(), 'Submit')]"));
+        clicked(By.xpath("//button[@type='submit' and contains(text(), 'Submit')]"));
         // Add a small wait to ensure values are set before submission
 
         // setInputValue(driver,"description","Vacant now with sea view");
@@ -103,40 +103,11 @@ public class addproject {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         return (String) js.executeScript("return arguments[0].value;", element);
     }
-    public String randomString(int length) {
-        // String symbols = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String symbols="abcdefghijklmnopqrstuvwxyz123456789";
-        Random rnd = new Random();
-        StringBuilder str = new StringBuilder();
-        for (int i = 0; i < 4; i++) {
-            str.append(symbols.charAt(rnd.nextInt(symbols.length())));
-        }
-        return str.toString();
-    }
 
-    public static String generateRandomChars(int totalChars) {
-        Random random = new Random();
-        StringBuilder stringBuilder = new StringBuilder();
 
-        // Generate the specified number of random characters
-        for (int i = 0; i < totalChars; i++) {
-            int x = random.nextInt(26) + 65; // Generates a number between 65 and 90 (A-Z)
-            stringBuilder.append((char) x);
-        }
 
-        return stringBuilder.toString(); // Return the generated string
-    }
 
-    public String randomString2(int length) {
-        // String symbols = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String symbols="abcdefghijklmnopqrstuvwxyz123456789";
-        Random rnd = new Random();
-        StringBuilder str = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            str.append(symbols.charAt(rnd.nextInt(symbols.length())));
-        }
-        return str.toString();
-    }
+
 
     public  void Entertext(WebDriver driver,String xpath,String text) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -148,57 +119,13 @@ public class addproject {
         js.executeScript("arguments[0].dispatchEvent(new Event('input', { bubbles: true }));", element);
     }
 
-    public void drop(WebDriver driver,String name, String xpath2){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement drop = driver.findElement(By.name(name));
-        drop.click();
-        WebElement drop2 = driver.findElement(By.xpath(xpath2));
-        drop2.click();
-    }
-    public String setInputValue(WebDriver driver, String name, String value) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.name(name)));
-        element.sendKeys(value);
-        return value;
-    }
 
-    public  void inputAdd(WebDriver driver,By locator,String value){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement findElement = driver.findElement(locator);
-        findElement.sendKeys(value);
-    }
 
-    public void clicked(WebDriver driver,By locator) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement findElement = wait.until(ExpectedConditions.elementToBeClickable(locator));
-        findElement.click();
-    }
-    public void SelectDropdowns(WebDriver driver,By locator) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement Dropdown = wait.until(ExpectedConditions.elementToBeClickable(locator));
-        Dropdown.click();
-    }
-    public void selectDate(WebDriver driver,String name,String xpath){
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement Dropdown = driver.findElement(By.name(name));
-        Dropdown.click();
-        WebElement Dropdown2 = driver.findElement(By.xpath(xpath));
-        Dropdown2.click();
-        WebElement ok=driver.findElement(By.xpath("/html/body/div[2]/div[3]/div/div/div/div[3]/button[2]"));
-        ok.click();
-    }
 
-    public static class URLValidator {
-        public static void validateURL(WebDriver driver, String expectedURL) {
-            String currentURL = driver.getCurrentUrl();
-            Assert.assertEquals(currentURL, expectedURL, "The URL is incorrect!");
-        }
-    }
-    public void scrollPage(int pixels) {
 
-        JavascriptExecutor js = (JavascriptExecutor) driver;
 
-        js.executeScript("window.scrollBy(0," + pixels + ")", "");
 
-    }
+
+
+
 }
