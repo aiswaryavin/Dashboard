@@ -1,37 +1,33 @@
-package org.example;
-
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Random;
 
 public class Main {
     public static WebDriver driver;
     public static WebDriverWait wait;
-    public static WebDriver getDriver() {
+  /*  public static WebDriver getDriver() {
         if (driver == null) {
             driver = new ChromeDriver();
         }
         return driver;
-    }
+    }*/
     @BeforeSuite
     public static void setUp() {
         // Initialize WebDriver if not already done
-        driver = new FirefoxDriver();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        driver = new ChromeDriver();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(1000));
     }
 
     @AfterSuite
@@ -43,10 +39,8 @@ public class Main {
     }
 
     public void clicked(By locator) {
-
-        WebElement findElement = wait.until(ExpectedConditions.elementToBeClickable(locator));
+        WebElement findElement = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         findElement.click();
-
     }
 
     public void enterText(By locator, String text) {
@@ -56,7 +50,7 @@ public class Main {
     }
 
 
-    public void validateURL(WebDriver driver,String expectedURL) {
+    public void validateURL(String expectedURL) {
         String currentURL = driver.getCurrentUrl();
         Assert.assertEquals(currentURL, expectedURL, "The URL is incorrect!");
     }
@@ -79,6 +73,7 @@ public class Main {
         WebElement Dropdown = wait.until(ExpectedConditions.elementToBeClickable(locator));
         Dropdown.click();
     }
+
     public String randomString(int length) {
         // String symbols = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String symbols="abcdefghijklmnopqrstuvwxyz123456789";
@@ -102,7 +97,6 @@ public class Main {
         return stringBuilder.toString(); // Return the generated string
     }
     public String randomString2(int length) {
-        // String symbols = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String symbols="abcdefghijklmnopqrstuvwxyz123456789";
         Random rnd = new Random();
         StringBuilder str = new StringBuilder();
@@ -110,14 +104,12 @@ public class Main {
             str.append(symbols.charAt(rnd.nextInt(symbols.length())));
         }
         return str.toString();
-    }
-    public void drop(WebDriver driver, String name, String xpath2) {
-        // Wait for the dropdown element to be visible and clickable
-        WebElement drop = wait.until(ExpectedConditions.elementToBeClickable(By.name(name)));
-        drop.click();
 
-        // Wait for the option to be visible and clickable
-        WebElement drop2 = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath2)));
+    }
+    public void drop(By locator1, By locator2) {
+        WebElement drop = wait.until(ExpectedConditions.elementToBeClickable(locator1));
+        drop.click();
+        WebElement drop2 = wait.until(ExpectedConditions.elementToBeClickable(locator2));
         drop2.click();
     }
 
@@ -135,5 +127,18 @@ public class Main {
         WebElement success = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         String actual = success.getText();
         Assert.assertEquals(actual, expectedValue);
+    }
+    public void promoChecker(By locator, String value){
+        WebElement promoName = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        String actual = promoName.getText();
+        Assert.assertEquals(actual,value);
+    }
+    public void validateErrorMessages(List<WebElement> actualMessages, String[] expectedMessages) {
+        Assert.assertEquals(actualMessages.size(), expectedMessages.length, "Number of validation messages does not match the expected count.");
+        Allure.step("The number of validation messages are matching with the expected count");
+        for (int i = 0; i < actualMessages.size(); i++) {
+            Assert.assertEquals(actualMessages.get(i).getText(), expectedMessages[i], "Validation message mismatch at index " + i);
+         Allure.step("The actual validation message is matching with the expected one");
+        }
     }
 }

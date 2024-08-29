@@ -3,10 +3,10 @@
 <suite name="Suite">
     <test name="Test">
         <classes>
-            <class name="org.example.login"/>
-            <class name="org.example.promotions"/>
-            <class name="org.example.addproject"/>
-            <class name="org.example.holidayhomes"/>
+            <class name="login"/>
+            <class name="promotions"/>
+            <class name="addproject"/>
+            <class name="holidayhomes"/>
         </classes>
     </test>
 </suite>
