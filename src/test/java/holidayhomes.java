@@ -121,7 +121,7 @@ public class holidayhomes extends Main {
         clicked(By.xpath("//button[normalize-space()='Submit']"));
         System.out.println("Clicked on submit button in the experience category");
 
-        List<WebElement> validationMessages = driver.findElements(By.xpath("//*[contains(@class, 'MuiFormHelperText-root') and (contains(@class, 'css-1hn95st') or contains(@class, 'Mui-error'))]"));
+        List<WebElement> validationMessages = driver.findElements(By.cssSelector(".MuiFormHelperText-root.css-1hn95st, .MuiFormHelperText-root.Mui-error"));
         String[] expectedMessages = {
                 "Enter title",
                 "please select Experience Category",

@@ -4,6 +4,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Main {
+    public String promotiontype=randomString(5);
     public static WebDriver driver;
     public static WebDriverWait wait;
   /*  public static WebDriver getDriver() {
@@ -141,4 +143,11 @@ public class Main {
          Allure.step("The actual validation message is matching with the expected one");
         }
     }
+    public void checkIfAdded(By locator, String value){
+        WebElement promoName = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        String actual = promoName.getText();
+        Assert.assertEquals(actual,value);
+        Allure.step(value+" is showing after adding");
+    }
+
 }
