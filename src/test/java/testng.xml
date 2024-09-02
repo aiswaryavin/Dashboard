@@ -7,8 +7,8 @@
             <class name="promotions"/>
             <class name="addproject"/>
             <class name="holidayhomes"/>
-        </classes>
-    </test>
+    </classes>
+</test>
 </suite>
 
 

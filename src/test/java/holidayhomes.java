@@ -14,6 +14,7 @@ public class holidayhomes extends Main {
         clicked(By.xpath("//*[@id='__next']/div/nav/div/div/div[2]/ul[12]/button"));
         System.out.println("Clicked on button");
         clicked(By.xpath("//*[@id='__next']/div/nav/div/div/div[2]/ul[12]/div[1]/div/div/a/div"));
+        Allure.step("Successfully redirected to the add holiday home page");
     }
 
     @Test(priority = 1)
@@ -112,6 +113,7 @@ public class holidayhomes extends Main {
         };
 
         validateErrorMessages(validationMessages, expectedMessages);
+
     }
 
     @Test(priority = 6)
@@ -137,6 +139,28 @@ public class holidayhomes extends Main {
 
         validateErrorMessages(validationMessages, expectedMessages);
     }
+    @Test(priority=7)
+    public void managecategory(){
+        clicked(By.xpath("//p[normalize-space()='Manage Categories']"));
+        clicked(By.xpath("//button[normalize-space()='Add Category']"));
+        drop(By.xpath("//input[@id='holiday_home_type']"),By.xpath("//li[@id='holiday_home_type-option-0']"));
+        enterText(By.xpath("//input[@id='title']"),"Dessert Ride");
+        enterText(By.xpath(" (//input[@id='title_ar'])[1]"),"]ثسسثقف قهيث");
+        clicked(By.xpath(" //button[normalize-space()='Submit']"));
+        verifyFirstTitleMatches("Dessert Ride",By.xpath("//td[contains(@class, 'MuiTableCell-root') and text()='1']/parent::tr"),By.xpath(".//td[contains(@class, 'MuiTableCell-root') and contains(@class, 'css-zl296')]"));
+
+    }
+    @Test(priority = 8)
+   public void deleteitem(){
+        delete(By.xpath("//td[contains(@class, 'MuiTableCell-root') and text()='1']/parent::tr"),By.xpath("//td[contains(@class, 'MuiTableCell-root') and text()='1']/parent::tr"));
+        System.out.println("clciked on delete button");
+
+    }
+
+
+
+
+
 
 
 }

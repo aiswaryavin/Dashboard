@@ -1,10 +1,12 @@
 import io.qameta.allure.Allure;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -25,12 +27,14 @@ public class Main {
         }
         return driver;
     }*/
+
+
     @BeforeSuite
-    public static void setUp() {
-        // Initialize WebDriver if not already done
+    public void setUpSuite() {
         driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(1000));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
+
 
     @AfterSuite
     public void tearDown() throws InterruptedException {
@@ -55,6 +59,7 @@ public class Main {
     public void validateURL(String expectedURL) {
         String currentURL = driver.getCurrentUrl();
         Assert.assertEquals(currentURL, expectedURL, "The URL is incorrect!");
+        Allure.step("URL validated as successfully");
     }
     public void scrollPage(int pixels) {
 
@@ -124,17 +129,15 @@ public class Main {
         WebElement inlineError = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         String actual = inlineError.getText();
         Assert.assertEquals(actual, expectedValue);
+        Allure.step("Validated the mandatory fields as successfully");
     }
     public void SuccessValidator(By locator, String expectedValue) {
         WebElement success = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
         String actual = success.getText();
         Assert.assertEquals(actual, expectedValue);
+        Allure.step("validated successfully");
     }
-    public void promoChecker(By locator, String value){
-        WebElement promoName = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-        String actual = promoName.getText();
-        Assert.assertEquals(actual,value);
-    }
+
     public void validateErrorMessages(List<WebElement> actualMessages, String[] expectedMessages) {
         Assert.assertEquals(actualMessages.size(), expectedMessages.length, "Number of validation messages does not match the expected count.");
         Allure.step("The number of validation messages are matching with the expected count");
@@ -143,11 +146,51 @@ public class Main {
          Allure.step("The actual validation message is matching with the expected one");
         }
     }
-    public void checkIfAdded(By locator, String value){
-        WebElement promoName = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-        String actual = promoName.getText();
-        Assert.assertEquals(actual,value);
-        Allure.step(value+" is showing after adding");
+    public void checkIfAdded(By locator, String value) {
+        WebElement Name = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        String actual = Name.getText();
+        Assert.assertEquals(actual, value);
+        Allure.step(value+"is matching with the expected message");
     }
+    public void verifyFirstTitleMatches (String expectedTitle,By locator1,By locator2){
+            // Locate the serial number element in the first position
+            WebElement serialNumberElement = driver.findElement(locator1);
+
+            // Find the title element that is in the same row as the serial number '1'
+            WebElement titleElement = serialNumberElement.findElement(locator2);
+
+            // Get the actual title text
+            String actualTitle = titleElement.getText();
+            System.out.println(actualTitle);
+
+            // Assert that the actual title matches the expected title
+            Assert.assertEquals(actualTitle, expectedTitle, "The title at serial number 1 does not match the expected title.");
+            Allure.step("added category is present in the table ");
+    }
+    public void verifyFirstPromoTypeMatches(String expectedPromoType, By locator1, By locator2){
+        // Locate the serial number element in the first position
+        WebElement serialNumberElement = driver.findElement(locator1);
+
+        // Find the promotion type element that is in the same row as the serial number '1'
+        WebElement promoTypeElement = serialNumberElement.findElement(locator2);
+
+        // Get the actual promotion type text
+        String actualPromoType = promoTypeElement.getText();
+        System.out.println(actualPromoType);
+
+        // Assert that the actual promotion type matches the expected promotion type
+        Assert.assertEquals(actualPromoType, expectedPromoType, "The promotion type at serial number 1 does not match the expected promotion type.");
+        Allure.step("Added promotion type is present in the table");
+    }
+    public void delete(By locator1,By locator2){
+
+            WebElement rowElement = driver.findElement(locator1);
+
+            // Find the delete button within the identified row
+            WebElement deleteButton = rowElement.findElement(locator2);
+            deleteButton.click();
+    }
+
+
 
 }

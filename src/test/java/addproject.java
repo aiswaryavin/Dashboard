@@ -3,6 +3,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -47,8 +48,10 @@ public class addproject extends Main {
         drop(By.name("lifeStyle"),By.xpath("//*[@id=\"lifeStyle-option-0\"]"));
         drop(By.name("ownership"),By.xpath("//*[@id=\"ownership-option-0\"]"));
         selectDate(driver,"startDate","/html/body/div[2]/div[3]/div/div/div/div[2]/div/div[2]/div/div/div[2]/div/div[2]/button[3]");
-        selectDate(driver,"completionDate","/html/body/div[2]/div[3]/div/div/div/div[2]/div/div[2]/div/div/div[2]/div/div[5]/button[5]");
-        selectDate(driver,"handoverDate","/html/body/div[2]/div[3]/div/div/div/div[2]/div/div[2]/div/div/div[2]/div/div[5]/button[7]");
+        clicked(By.xpath("//button[@title='Next month']//*[name()='svg']"));
+        selectDate(driver,"completionDate","/html/body/div[2]/div[3]/div/div/div/div[2]/div/div[2]/div/div/div[2]/div/div[1]/button[2]");
+        clicked(By.xpath("//button[@title='Next month']//*[name()='svg']"));
+        selectDate(driver,"handoverDate","//button[normalize-space()='24']");
         setInputValue(driver,"serviceCharge","5000");
         scrollPage(500);
         String descriptionText = generateRandomChars(800);
@@ -63,6 +66,45 @@ public class addproject extends Main {
 
 
     }
+    @Test(priority = 2)
+    public void checkMandatoryFields() {
+        clicked(By.xpath("//button[normalize-space()='Clear']"));
+        clicked(By.xpath("//button[normalize-space()='Submit']"));
+        System.out.println("clicked on the submit button without filling any mandatory fields.");
+        List<WebElement> validationMessages = driver.findElements(By.cssSelector(
+                "p.MuiFormHelperText-root.css-1hn95st:nth-of-type(1), " +  // "Please provide a project name"
+                        "p.MuiFormHelperText-root.css-1hn95st:nth-of-type(2), " +  // "Please enter the license number"
+                        "p.MuiFormHelperText-root.Mui-error.css-xp5gfi"              // "Please select a developer company"
+        ));
+
+        for (WebElement message : validationMessages) {
+            System.out.println(message.getText());
+        }
+        String[] expectedMessages = {
+                "Please provide a project name",
+                "Please enter the license number",
+                "Please enter the project number",
+                "Please select a developer company",
+                "Please select a country",
+                "Please select a state",
+                "Please select a city",
+                "Please select a community",
+                "Please select a sub community",
+                "Please select a completion status",
+                "Please enter Plot Area",
+                "Please select an option",
+                "Please enter No. of Properties",
+                "Please select a life style",
+                "Please select the ownership type",
+                "Please enter the handover date",
+                "Please enter the project description",
+                "0/2000"
+
+        };
+
+        validateErrorMessages(validationMessages, expectedMessages);
+    }
+
     public void selectFacility(WebDriver driver, String facilityName) {
         WebElement facility = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='" + facilityName + "']")));
         facility.click();

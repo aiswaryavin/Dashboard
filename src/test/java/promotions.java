@@ -23,38 +23,38 @@ public class promotions extends Main {
     @Test(priority = 3)
    public void verifyAddpromo(){
 
-        enterText(By.xpath("//input[@id='title']"),promotiontype);
+        enterText(By.xpath("//input[@id='title']"),"newpromo");
         clicked(By.xpath("//button[normalize-space()='Submit']"));
     }
 
     @Test(priority = 4)
 
-        public void verifyExistPromo(){
-            checkIfAdded(By.xpath("//*[@id=\"__next\"]/div/main/div/div[2]/div[2]/div/div[2]/div/div/div/div/div[2]/table/tbody/tr[1]/td[3]"),promotiontype);
+    public void verifyExistPromo(){
+        // Add a promotion, assuming the title "newpromo"
+        enterText(By.xpath("//input[@id='title']"), "newpromo");
+        clicked(By.xpath("//button[normalize-space()='Submit']"));
 
-            // Locate all table rows
-         /*   List<WebElement> tableRows = driver.findElements(By.cssSelector("tr"));
+        // Get the promotion type from the UI after submission
+        String actualPromotionType = getPromotionTypeAtSerialNumber(1);
 
-            // Loop through the table rows to check if "phase testing" is present
-            for (WebElement row : tableRows) {
-                // Locate the cells in the current row
-                List<WebElement> cells = row.findElements(By.cssSelector("td.MuiTableCell-root.MuiTableCell-body.MuiTableCell-sizeMedium.css-1gp8781"));
-
-                // Check if any cell contains the text "phase testing"
-                for (WebElement cell : cells) {
-                    if (cell.getText().equals(promotiontype)){
-                        System.out.println("Added promotion type is present in the table");
-
-                    }
-
-                }
-            }
-            System.out.println("Added promotion is not present in the table.");*/
-            // If "phase testing" is not found in any row
-
-
-
+        // Now verify if the promotion type in the first row matches the retrieved one
+        verifyFirstPromoTypeMatches(actualPromotionType,
+                By.xpath("//td[contains(@class, 'MuiTableCell-root') and text()='1']/parent::tr"),
+                By.xpath(".//td[contains(@class, 'MuiTableCell-root') and contains(@class, 'css-1gp8781')]"));
     }
+
+    public String getPromotionTypeAtSerialNumber(int serialNumber) {
+        // Locate the row with the specified serial number
+        WebElement rowElement = driver.findElement(By.xpath("//td[contains(@class, 'MuiTableCell-root') and text()='" + serialNumber + "']/parent::tr"));
+
+        // Retrieve the promotion type from the row
+        WebElement promoTypeElement = rowElement.findElement(By.xpath(".//td[contains(@class, 'MuiTableCell-root') and contains(@class, 'css-1gp8781')]"));
+
+        // Return the text of the promotion type
+        return promoTypeElement.getText();
+    }
+
+
 
     @Test(priority = 5)
     public void verifyDelete(){
@@ -62,4 +62,8 @@ public class promotions extends Main {
         clicked(By.xpath("//button[normalize-space()='Yes']"));
         SuccessValidator(By.xpath("//div[@class='MuiBox-root css-0']//div[contains(text(),'Promotion Type Deleted successfully.')]"),"Promotion Type Deleted Successfully");
     }
+
+
+
+
 }
