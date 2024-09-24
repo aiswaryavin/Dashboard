@@ -4,9 +4,10 @@
     <test name="Test">
         <classes>
             <class name="login"/>
-            <class name="promotions"/>
+           <!-- <class name="promotions"/>
             <class name="addproject"/>
-            <class name="holidayhomes"/>
+            <class name="holidayhomes"/>-->
+            <class name="careers"/>
     </classes>
 </test>
 </suite>

@@ -20,39 +20,39 @@ public class addproject extends Main {
         clicked(By.xpath("//*[@id=\"__next\"]/div/nav/div/div/div[2]/ul[2]/div[1]/div/div/a/div"));
         String prjtname = randomString(4);
         String license = UUID.randomUUID().toString();
-        String projectno=randomString2(6);
-        String des=randomString2(750);
-        setInputValue(driver,"projectTitle", prjtname);
-        setInputValue(driver,"licenseNumber",  license);
-        setInputValue(driver,"projectNumber", projectno);
-        drop(By.name("masterDeveloperSelector"),By.xpath("//*[@id=\"masterDeveloperSelector-option-0\"]"));
-        drop(By.name("locationCountrySelect"),By.xpath("//*[@id=\"locationCountrySelect-option-0\"]"));
-        drop(By.name("locationState"),By.xpath("//*[@id=\"locationState-option-0\"]"));
-        drop(By.name("locationCitySelector"),By.xpath("//*[@id=\"locationCitySelector-option-0\"]"));
-        drop(By.name("locationCommunity"),By.xpath("//*[@id=\"locationCommunity-option-0\"]"));
-        drop(By.name("locationSubCommunity"),By.xpath("//*[@id=\"locationSubCommunity-option-0\"]"));
-        drop(By.name("completionStatus"),By.xpath("//*[@id=\"completionStatus-option-0\"]"));
-        String s=setInputValue(driver,"completionPercentage","2000");
+        String projectno = randomString2(6);
+        String des = randomString2(750);
+        setInputValue(driver, "projectTitle", prjtname);
+        setInputValue(driver, "licenseNumber", license);
+        setInputValue(driver, "projectNumber", projectno);
+        drop(By.name("masterDeveloperSelector"), By.xpath("//*[@id=\"masterDeveloperSelector-option-0\"]"));
+        drop(By.name("locationCountrySelect"), By.xpath("//*[@id=\"locationCountrySelect-option-0\"]"));
+        drop(By.name("locationState"), By.xpath("//*[@id=\"locationState-option-0\"]"));
+        drop(By.name("locationCitySelector"), By.xpath("//*[@id=\"locationCitySelector-option-0\"]"));
+        drop(By.name("locationCommunity"), By.xpath("//*[@id=\"locationCommunity-option-0\"]"));
+        drop(By.name("locationSubCommunity"), By.xpath("//*[@id=\"locationSubCommunity-option-0\"]"));
+        drop(By.name("completionStatus"), By.xpath("//*[@id=\"completionStatus-option-0\"]"));
+        String s = setInputValue(driver, "completionPercentage", "2000");
         driver.findElement(By.xpath("//*[@id=\"__next\"]/div/main/div/div[2]/div/div/div[3]/div/div[1]")).click();
-        String s1=driver.findElement(By.xpath("//*[@id=\"__next\"]/div/main/div/div[2]/div/div/div[3]/div/div[2]/div/div/div[2]/div[3]/p")).getText();
+        String s1 = driver.findElement(By.xpath("//*[@id=\"__next\"]/div/main/div/div[2]/div/div/div[3]/div/div[2]/div/div/div[2]/div[3]/p")).getText();
         System.out.println(s1);
-        Assert.assertEquals(s1,"The value must be less than 100");
+        Assert.assertEquals(s1, "The value must be less than 100");
         driver.findElement(By.name("completionPercentage")).sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
-        setInputValue(driver,"completionPercentage","100");
-        selectDate(driver,"completionPercentageDate","/html/body/div[2]/div[3]/div/div/div/div[2]/div/div[2]/div/div/div[2]/div/div[4]/button[3]");
-        setInputValue(driver,"plotArea","5000");
-        setInputValue(driver,"builtupArea","3000");
+        setInputValue(driver, "completionPercentage", "100");
+        selectDate(driver, "completionPercentageDate", "/html/body/div[2]/div[3]/div/div/div/div[2]/div/div[2]/div/div/div[2]/div/div[4]/button[3]");
+        setInputValue(driver, "plotArea", "5000");
+        setInputValue(driver, "builtupArea", "3000");
         validateURL("https://dashboard.aqaryint.com/dashboard/project/add_project");
-        drop(By.name("furnished"),By.xpath("//*[@id=\"furnished-option-1\"]"));
-        setInputValue(driver,"noOfProperties","10");
-        drop(By.name("lifeStyle"),By.xpath("//*[@id=\"lifeStyle-option-0\"]"));
-        drop(By.name("ownership"),By.xpath("//*[@id=\"ownership-option-0\"]"));
-        selectDate(driver,"startDate","/html/body/div[2]/div[3]/div/div/div/div[2]/div/div[2]/div/div/div[2]/div/div[2]/button[3]");
+        drop(By.name("furnished"), By.xpath("//*[@id=\"furnished-option-1\"]"));
+        setInputValue(driver, "noOfProperties", "10");
+        drop(By.name("lifeStyle"), By.xpath("//*[@id=\"lifeStyle-option-0\"]"));
+        drop(By.name("ownership"), By.xpath("//*[@id=\"ownership-option-0\"]"));
+        selectDate(driver, "startDate", "/html/body/div[2]/div[3]/div/div/div/div[2]/div/div[2]/div/div/div[2]/div/div[2]/button[3]");
         clicked(By.xpath("//button[@title='Next month']//*[name()='svg']"));
-        selectDate(driver,"completionDate","/html/body/div[2]/div[3]/div/div/div/div[2]/div/div[2]/div/div/div[2]/div/div[1]/button[2]");
+        selectDate(driver, "completionDate", "/html/body/div[2]/div[3]/div/div/div/div[2]/div/div[2]/div/div/div[2]/div/div[1]/button[2]");
         clicked(By.xpath("//button[@title='Next month']//*[name()='svg']"));
-        selectDate(driver,"handoverDate","//button[normalize-space()='24']");
-        setInputValue(driver,"serviceCharge","5000");
+        selectDate(driver, "handoverDate", "//button[normalize-space()='24']");
+        setInputValue(driver, "serviceCharge", "5000");
         scrollPage(500);
         String descriptionText = generateRandomChars(800);
         String arabicDescriptionText = generateRandomChars(800);
@@ -66,6 +66,7 @@ public class addproject extends Main {
 
 
     }
+
     @Test(priority = 2)
     public void checkMandatoryFields() {
         clicked(By.xpath("//button[normalize-space()='Clear']"));
@@ -114,17 +115,19 @@ public class addproject extends Main {
         WebElement amenity = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='" + amenityName + "']")));
         amenity.click();
     }
+
     public String getTextUsingJavaScript(WebDriver driver, String xpath) {
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
         JavascriptExecutor js = (JavascriptExecutor) driver;
         return (String) js.executeScript("return arguments[0].value;", element);
     }
 
-    public  void Entertext(WebDriver driver,String xpath,String text) {
+    public void Entertext(WebDriver driver, String xpath, String text) {
         WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].value = arguments[1];", element, text);
         js.executeScript("arguments[0].dispatchEvent(new Event('input', { bubbles: true }));", element);
     }
-
 }
+
+

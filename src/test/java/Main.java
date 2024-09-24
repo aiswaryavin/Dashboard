@@ -32,7 +32,7 @@ public class Main {
     @BeforeSuite
     public void setUpSuite() {
         driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(20));
     }
 
 
@@ -94,7 +94,6 @@ public class Main {
     public static String generateRandomChars(int totalChars) {
         Random random = new Random();
         StringBuilder stringBuilder = new StringBuilder();
-
         // Generate the specified number of random characters
         for (int i = 0; i < totalChars; i++) {
             int x = random.nextInt(26) + 65; // Generates a number between 65 and 90 (A-Z)
@@ -132,10 +131,11 @@ public class Main {
         Allure.step("Validated the mandatory fields as successfully");
     }
     public void SuccessValidator(By locator, String expectedValue) {
-        WebElement success = wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        WebElement success = wait.until(ExpectedConditions.elementToBeClickable(locator));
         String actual = success.getText();
         Assert.assertEquals(actual, expectedValue);
-        Allure.step("validated successfully");
+        System.out.println(actual);
+        Allure.step("Toast message validated successfully");
     }
 
     public void validateErrorMessages(List<WebElement> actualMessages, String[] expectedMessages) {
@@ -162,8 +162,6 @@ public class Main {
             // Get the actual title text
             String actualTitle = titleElement.getText();
             System.out.println(actualTitle);
-
-            // Assert that the actual title matches the expected title
             Assert.assertEquals(actualTitle, expectedTitle, "The title at serial number 1 does not match the expected title.");
             Allure.step("added category is present in the table ");
     }

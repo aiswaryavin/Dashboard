@@ -140,26 +140,86 @@ public class holidayhomes extends Main {
         validateErrorMessages(validationMessages, expectedMessages);
     }
     @Test(priority=7)
-    public void managecategory(){
+    public void managecategory() throws InterruptedException {
         clicked(By.xpath("//p[normalize-space()='Manage Categories']"));
+        System.out.println("clicked on manage category");
+        Thread.sleep(2000);
         clicked(By.xpath("//button[normalize-space()='Add Category']"));
-        drop(By.xpath("//input[@id='holiday_home_type']"),By.xpath("//li[@id='holiday_home_type-option-0']"));
-        enterText(By.xpath("//input[@id='title']"),"Dessert Ride");
+        System.out.println("clicked on add category");
+        Thread.sleep(1000);
+        drop(By.xpath("//input[@id='holiday_home_type']"),By.xpath("//li[@id='holiday_home_type-option-1']"));
+        System.out.println("Holiday home type");
+        Thread.sleep(3000);
+        enterText(By.xpath("//input[@id='title']"),"Night ride");
         enterText(By.xpath(" (//input[@id='title_ar'])[1]"),"]ثسسثقف قهيث");
-        clicked(By.xpath(" //button[normalize-space()='Submit']"));
+        Thread.sleep(2000);
+        clicked(By.xpath("//button[normalize-space()='Submit']"));
+        Thread.sleep(2000);
+        System.out.println("clicked on submit button");
+        Thread.sleep(3000);
+        SuccessValidator(By.cssSelector("//div[@class='MuiBox-root css-sqcvv9']//div[contains(text(),'Category Has been created Successfully')]"),"Category Has been created Successfully");
         verifyFirstTitleMatches("Dessert Ride",By.xpath("//td[contains(@class, 'MuiTableCell-root') and text()='1']/parent::tr"),By.xpath(".//td[contains(@class, 'MuiTableCell-root') and contains(@class, 'css-zl296')]"));
 
+
     }
+
     @Test(priority = 8)
-   public void deleteitem(){
-        delete(By.xpath("//td[contains(@class, 'MuiTableCell-root') and text()='1']/parent::tr"),By.xpath("//td[contains(@class, 'MuiTableCell-root') and text()='1']/parent::tr"));
-        System.out.println("clciked on delete button");
+   public void deletecategory() throws InterruptedException {
+      //  delete(By.xpath("//td[contains(@class, 'MuiTableCell-root') and text()='1']/parent::tr"),By.xpath("//tbody/tr[1]/td[3]"));
+        clicked(By.xpath("//tbody/tr[1]/td[5]/div[1]/button[2]"));
+        System.out.println("clicked on delete button");
+        Thread.sleep(2000);
+        Thread.sleep(2000);
+        clicked(By.xpath("//button[normalize-space()='Yes']"));
+        Thread.sleep(2000);
+        SuccessValidator(By.xpath("//div[@class='MuiBox-root css-sqcvv9']//div[@class='Toastify']//div[@role='alert']"),"Category Deleted Successfully");
+
+    }
+    @Test(priority =9)
+    public void packageinclusions() {
+        clicked(By.xpath("//p[normalize-space()='Package Inclusions']"));
+        clicked(By.xpath("//button[normalize-space()='Add Package Inclusion']"));
+        drop(By.xpath("//input[@id='holidayHome_type']"), By.xpath("//li[@id='holidayHome_type-option-1']"));
+        System.out.println("selected the holy home type");
+        enterText(By.xpath("//input[@id='title']"), "Dessert Ride");
+        enterText(By.xpath("//input[@id='title_ar']"), "]ثسسثقف ٌهيث");
+        enterText(By.xpath("//input[@id='icon']"), "C:\\Users\\Aiswarya\\Downloads\\download (12).jpg");
+        clicked(By.xpath("//button[normalize-space()='Submit']"));
+        SuccessValidator(By.xpath("//div[@class='MuiBox-root css-sqcvv9']//div[contains(text(),'Package Inclusion Created Successfully')]"),"Package Inclusion Created Successfully");
+        verifyFirstTitleMatches("Dessert Ride", By.xpath("//td[contains(@class, 'MuiTableCell-root') and text()='1']/parent::tr"), By.xpath(".//td[contains(@class, 'MuiTableCell-root') and contains(@class, 'css-zl296')]"));
+
+    }
+    @Test(priority=10)
+    public void deletecatepackage() throws InterruptedException {
+      //  delete(By.xpath("//td[contains(@class, 'MuiTableCell-root') and text()='1']/parent::tr"),By.xpath(".//button[contains(@class, 'delete-button-class')]"));
+        clicked(By.xpath("//tbody/tr[1]/td[6]/div[1]/button[2]"));
+        System.out.println("Clicked on delete button");
+        Thread.sleep(2000);
+        clicked(By.xpath("//button[normalize-space()='Yes']"));
+        Thread.sleep(2000);
+        SuccessValidator(By.xpath("//div[@class='MuiBox-root css-sqcvv9']//div[contains(text(),'Package Inclusion Deleted Successfully')]"),"Package Inclusion Deleted Successfully");
+
+
+    }
+    @Test(priority = 11)
+    public void manageportals() throws InterruptedException{
+        Thread.sleep(2000);
+        clicked(By.xpath("//p[normalize-space()='Manage Portals']"));
+        System.out.println("Clicked on Manage portal menu");
+        Thread.sleep(2000);
+        clicked(By.xpath("//button[normalize-space()='Add Portal']"));
+        System.out.println("clicked on the add portal");
+        Thread.sleep(2000);
+        enterText(By.name("portal_name"),"dubaijobs");
+        enterText(By.xpath("//input[@id='portal_url']"),"https://www.dubaijobs.com");
+        enterText(By.xpath("//input[@id='upload_logo']"),"C:\\Users\\Aiswarya\\Downloads\\image 1.jpg");
+        clicked(By.xpath("//button[normalize-space()='Submit']"));
+        System.out.println("added portal successfully");
+
 
     }
 
-
-
-
+    
 
 
 
